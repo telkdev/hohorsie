@@ -26,14 +26,13 @@ describe('Race Model', () => {
       },
     ])
     const race = makeRace(horses)
-    expect(race.rounds).toHaveLength(7)
-    expect(race.rounds[0].distance).toBe(10)
-    expect(race.rounds[1].distance).toBe(1200)
-    expect(race.rounds[2].distance).toBe(1400)
-    expect(race.rounds[3].distance).toBe(1600)
-    expect(race.rounds[4].distance).toBe(1800)
-    expect(race.rounds[5].distance).toBe(2000)
-    expect(race.rounds[6].distance).toBe(2200)
+    expect(race.rounds).toHaveLength(6)
+    expect(race.rounds[0].distance).toBe(1200)
+    expect(race.rounds[1].distance).toBe(1400)
+    expect(race.rounds[2].distance).toBe(1600)
+    expect(race.rounds[3].distance).toBe(1800)
+    expect(race.rounds[4].distance).toBe(2000)
+    expect(race.rounds[5].distance).toBe(2200)
   })
 
   it('creates a round with horses', () => {
@@ -60,7 +59,7 @@ describe('Race Model', () => {
     const race = makeRace(horses)
     const round = race.rounds[0]
     expect(round.id).toBe(1)
-    expect(round.distance).toBe(10)
+    expect(round.distance).toBe(1200)
     expect(round.horses).toHaveLength(2)
   })
 

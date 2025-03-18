@@ -19,6 +19,7 @@
             :width="55"
             :height="55"
             :style="horseProgressStyles(horse.value)"
+            :data-testid="`RoundTrack_Horse_${horse.value.name}`"
           />
         </div>
         <div class="w-[55px] border-l-2 border-red-800">
