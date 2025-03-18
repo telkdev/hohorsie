@@ -4,7 +4,7 @@ import { computed, ref, watch, type Ref } from 'vue'
 export function useSelectedRound(
   rounds: Ref<Round[]>,
   scoreBoard: Ref<ScoreBoard[]>,
-  currentRound: Ref<Round | undefined>,
+  currentRound: Ref<Round | null>,
 ) {
   const selectedRoundIndex = ref(0)
   const selectedResultIndex = ref(0)

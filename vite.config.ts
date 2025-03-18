@@ -7,7 +7,6 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  publicDir: process.env.NODE_ENV === 'production' ? '/hohorsie' : '/',
   plugins: [tailwindcss(), vue(), vueDevTools()],
   resolve: {
     alias: {
