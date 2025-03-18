@@ -1,11 +1,11 @@
 <template>
   <header class="bg-green-300">
-    <div class="max-w-[1920px] mx-auto py-2 px-4 flex items-center justify-between">
-      <AppLogo />
+    <div class="max-w-[1920px] mx-auto py-2 px-4 flex items-center justify-between flex-wrap">
+      <AppLogo class="mr-2" />
 
-      <div class="flex items-center gap-2">
-        <GenerateRaceButton />
-        <StartRaceButton />
+      <div class="flex items-center gap-2 w-full xs:w-auto">
+        <GenerateRaceButton class="grow" />
+        <StartRaceButton class="grow" />
       </div>
     </div>
   </header>
