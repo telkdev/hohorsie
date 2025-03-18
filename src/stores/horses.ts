@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Horse } from '@/entities/horse'
+import type { Meters } from '@/types/units'
 
 const colors = [
   'red',
@@ -49,7 +50,7 @@ const names = [
 ]
 
 const HORSES_COUNT = 20
-const DEFAULT_SPEED = 17
+const DEFAULT_SPEED: Meters = 17 * 3 // 17 m/s is the average speed of a racehorse, for game purposes I increased it * 3
 
 export const useHorsesStore = defineStore('horses', () => {
   const horses = ref<Horse[]>([])
@@ -61,8 +62,6 @@ export const useHorsesStore = defineStore('horses', () => {
       color: colors[i] ?? 'black',
       condition: Math.floor(Math.random() * 100) || 1,
       speed: DEFAULT_SPEED,
-      distanceInRound: 0,
-      timeInRound: 0,
     }))
   }
 

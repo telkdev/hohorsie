@@ -2,7 +2,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useHorsesStore } from '@/stores/horses'
 
-const DEFAULT_SPEED = 17
+const DEFAULT_SPEED = 17 * 3
 const HORSES_COUNT = 20
 
 describe('Horses Store', () => {
@@ -32,8 +32,6 @@ describe('Horses Store', () => {
       expect(horse.color).toBeDefined()
       expect(horse.condition).toBeGreaterThan(0)
       expect(horse.speed).toBe(DEFAULT_SPEED)
-      expect(horse.distanceInRound).toBe(0)
-      expect(horse.timeInRound).toBe(0)
     },
   )
 })

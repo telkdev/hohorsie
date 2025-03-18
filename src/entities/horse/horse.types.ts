@@ -6,6 +6,4 @@ export type Horse = {
   color: string
   condition: number
   speed: number
-  distanceInRound: number
-  timeInRound: number
 }

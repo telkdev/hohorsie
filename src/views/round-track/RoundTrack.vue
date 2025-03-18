@@ -32,21 +32,21 @@
 
 <script setup lang="ts">
 import { HorseWithRider } from '@/components/icons'
-import type { Horse } from '@/entities/horse'
+import type { RaceHorse } from '@/entities/race'
 import { useRaceStore } from '@/stores/race'
 import { storeToRefs } from 'pinia'
 
 const raceStore = useRaceStore()
 const { currentRound } = storeToRefs(raceStore)
 
-function horseProgressStyles(horse: Horse) {
+function horseProgressStyles(horse: RaceHorse) {
   if (!currentRound.value) return {}
   const percentage = (horse.distanceInRound / currentRound.value.distance) * 100
-  const incline = Math.sin(horse.distanceInRound * 0.05) * 30
+  const incline = Math.sin(horse.distanceInRound * 0.05) * 10
 
   return {
     left: `calc(${percentage}%`,
-    transition: 'transform 1s linear',
+    transition: 'left 0.25s linear, transform 0.25s linear',
     transform: `rotate(${incline}deg)`,
   }
 }

@@ -3,16 +3,21 @@ import type { ID } from '@/types/id'
 import type { Meters } from '@/types/units'
 import { type Ref } from 'vue'
 
+export type RaceHorse = Horse & {
+  distanceInRound: number
+  timeInRound: number
+}
+
 export type Round = {
   id: ID
   distance: Meters
-  horses: Ref<Horse>[]
-  scoreBoard: Horse[]
+  horses: Ref<RaceHorse>[]
+  scoreBoard: RaceHorse[]
   start: () => void
 }
 
 export type ScoreBoard = {
-  horses: Horse[]
+  horses: RaceHorse[]
   distance: Meters
 }
 

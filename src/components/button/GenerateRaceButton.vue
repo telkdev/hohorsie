@@ -12,6 +12,8 @@ import { useRaceStore } from '@/stores/race'
 import { BaseButton } from '.'
 import { storeToRefs } from 'pinia'
 import { useHorsesStore } from '@/stores/horses'
+import type { RaceHorse } from '@/entities/race'
+import { computed } from 'vue'
 
 const horsesStore = useHorsesStore()
 const { horses } = storeToRefs(horsesStore)
@@ -21,6 +23,15 @@ const { hasStarted, hasFinished } = storeToRefs(raceStore)
 
 function generateRace() {
   horsesStore.generateHorses()
-  raceStore.makeRace(horses)
+
+  const raceHorses = computed<RaceHorse[]>(() =>
+    horses.value.map((horse) => ({
+      ...horse,
+      distanceInRound: 0,
+      timeInRound: 0,
+    })),
+  )
+
+  raceStore.makeRace(raceHorses)
 }
 </script>

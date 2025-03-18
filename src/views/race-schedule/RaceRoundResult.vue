@@ -4,7 +4,7 @@
       <template #cell="{ cell, rowIndex }">
         <span
           :class="placeColor(rowIndex)"
-          class="p-1 flex"
+          class="py-1 px-2 flex"
           :data-testid="`RaceRoundResult_Cell_${rowIndex}`"
         >
           {{ cell }}
@@ -16,12 +16,12 @@
 
 <script setup lang="ts">
 import { BaseTable } from '@/components/table'
-import type { Horse } from '@/entities/horse'
+import type { RaceHorse } from '@/entities/race'
 import { computed } from 'vue'
 
 type RaceResult = {
   distance: number
-  horses: Horse[]
+  horses: RaceHorse[]
 }
 
 const { result } = defineProps<{

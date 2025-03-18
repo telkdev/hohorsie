@@ -1,7 +1,6 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import { defineStore } from 'pinia'
-import { type Race, type Round, type ScoreBoard, makeRace as initRace } from '@/entities/race'
-import type { Horse } from '@/entities/horse'
+import { type Race, type RaceHorse, type Round, type ScoreBoard, makeRace as initRace } from '@/entities/race'
 import { useLoggerStore } from './logger'
 
 export const useRaceStore = defineStore('race', () => {
@@ -39,7 +38,7 @@ export const useRaceStore = defineStore('race', () => {
     race.value?.scoreBoard.push(scoreBoard)
   }
 
-  function makeRace(horses: Ref<Horse[]>) {
+  function makeRace(horses: Ref<RaceHorse[]>) {
     race.value = initRace(horses)
   }
 
