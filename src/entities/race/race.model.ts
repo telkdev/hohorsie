@@ -40,7 +40,7 @@ function makeRound(id: ID, distance: Meters, horses: Ref<Horse>[]): Round {
 }
 
 export function makeRace(horses: Ref<Horse[]>): Race {
-  const distances: Meters[] = [10, 1200, 1400, 1600, 1800, 2000, 2200]
+  const distances: Meters[] = [1200, 1400, 1600, 1800, 2000, 2200]
   const rounds = distances.map((distance, index) =>
     makeRound(index + 1, distance, horsesPerRound(horses)),
   )
