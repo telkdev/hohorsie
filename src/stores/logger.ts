@@ -5,7 +5,9 @@ export const useLoggerStore = defineStore('logger', () => {
   const logs = ref<string[]>([])
 
   function log(message: string) {
-    logs.value.unshift(message)
+    const time = new Date().toLocaleTimeString()
+
+    logs.value.unshift(`${time}: ${message}`)
   }
 
   function clear() {
