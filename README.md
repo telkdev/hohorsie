@@ -1,4 +1,5 @@
 # horce-race
+Live Demo - https://hohorsie.vercel.app/
 
 Horse race app written in Vue 3(Composition api), TypeScript, Tailwind CSS, unit tests are written with vitest, e2e with cypress. 
 For store Pinia is used since it is the default state management for Vue.
