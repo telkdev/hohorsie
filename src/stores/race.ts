@@ -1,7 +1,20 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import { defineStore } from 'pinia'
-import { type Race, type RaceHorse, type Round, type ScoreBoard, makeRace as initRace } from '@/entities/race'
+import {
+  type Race,
+  type RaceHorse,
+  type Round,
+  type ScoreBoard,
+  makeRace as initRace,
+} from '@/entities/race'
 import { useLoggerStore } from './logger'
+
+function logWinners(round: Round, logger = useLoggerStore()) {
+  const winners = round.scoreBoard.slice(0, 3)
+  logger.log(
+    `Round ${round.id} finished. Winners: ${winners.map((horse) => horse.name).join(', ')}`,
+  )
+}
 
 export const useRaceStore = defineStore('race', () => {
   const race = ref<Race | null>(null)
@@ -22,7 +35,7 @@ export const useRaceStore = defineStore('race', () => {
   })
 
   function startRace() {
-    race.value?.rounds[0].start()
+    startRound(0)
   }
 
   function incrementRound() {
@@ -92,10 +105,7 @@ function useRaceTrack(
   function onRoundFinished(round: Round) {
     if (!race.value) return
 
-    const winners = round.scoreBoard.slice(0, 3)
-    logger.log(
-      `Round ${round.id} finished. Winners: ${winners.map((horse) => horse.name).join(', ')}`,
-    )
+    logWinners(round)
 
     useRaceStore().updateScoreBoard({
       distance: round.distance,

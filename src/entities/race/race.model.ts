@@ -3,35 +3,59 @@ import type { ID } from '@/types/id'
 import type { Meters } from '@/types/units'
 import { ref, type Ref } from 'vue'
 import type { Race, RaceHorse, Round } from './race.types'
+import { makeTime, toSeconds, type Milliseconds } from '@/utils/time'
+import { sortRandom } from '@/utils/random'
 
 const HORSES_PER_ROUND = 10
+const HORSE_UPDATE_INTERVAL = 250
+
+type Interval = ReturnType<typeof setInterval>
+
 function horsesPerRound(horses: Ref<RaceHorse[]>, count = HORSES_PER_ROUND): Ref<RaceHorse>[] {
-  const shuffledHorses = [...horses.value].sort(() => Math.random() - 0.5)
+  const shuffledHorses = sortRandom([...horses.value])
   return shuffledHorses.slice(0, count).map((horse) => ref({ ...horse }))
 }
 
-function makeTime() {
-  return +new Date()
+function makeTimeInRound(startTime: Milliseconds, endTime: Milliseconds) {
+  return +toSeconds(endTime - startTime).toFixed(2)
+}
+
+function updateHorseProgress(
+  horse: Ref<RaceHorse>,
+  distance: Meters,
+  raceStartTime: number,
+  interval: Interval,
+  onFinish?: (horse: RaceHorse) => void,
+) {
+  horse.value.distanceInRound += horseSpeed(horse.value.speed, horse.value.condition)
+
+  const isFinished = horse.value.distanceInRound >= distance
+  if (isFinished) {
+    const raceEndTime = makeTime()
+    horse.value.timeInRound = makeTimeInRound(raceStartTime, raceEndTime)
+    horse.value.distanceInRound = distance
+    clearInterval(interval)
+    onFinish?.(horse.value)
+  }
+}
+
+function updateScoreBoard(scoreBoard: RaceHorse[], horse: RaceHorse) {
+  scoreBoard.push(horse)
 }
 
 function makeRound(id: ID, distance: Meters, horses: Ref<RaceHorse>[]): Round {
   const scoreBoard: RaceHorse[] = []
 
   function start() {
+    // on round start we track horse progress
     horses.forEach((horse) => {
       const raceStartTime = makeTime()
-      const interval = setInterval(() => {
-        horse.value.distanceInRound += horseSpeed(horse.value.speed, horse.value.condition)
 
-        const isFinished = horse.value.distanceInRound >= distance
-        if (isFinished) {
-          const raceEndTime = makeTime()
-          horse.value.timeInRound = +((raceEndTime - raceStartTime) / 1000).toFixed(2)
-          horse.value.distanceInRound = distance
-          scoreBoard.push(horse.value)
-          clearInterval(interval)
-        }
-      }, 250)
+      const interval = setInterval(() => {
+        updateHorseProgress(horse, distance, raceStartTime, interval, (horse) =>
+          updateScoreBoard(scoreBoard, horse),
+        )
+      }, HORSE_UPDATE_INTERVAL)
     })
   }
 

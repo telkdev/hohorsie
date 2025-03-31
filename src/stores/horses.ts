@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Horse } from '@/entities/horse'
 import type { Meters } from '@/types/units'
+import { random } from '@/utils/math'
 
 const colors = [
   'red',
@@ -60,7 +61,7 @@ export const useHorsesStore = defineStore('horses', () => {
       id: i,
       name: names[i] ?? `Horse ${i + 1}`,
       color: colors[i] ?? 'black',
-      condition: Math.floor(Math.random() * 100) || 1,
+      condition: random(),
       speed: DEFAULT_SPEED,
     }))
   }

@@ -34,19 +34,28 @@
 import { HorseWithRider } from '@/components/icons'
 import type { RaceHorse } from '@/entities/race'
 import { useRaceStore } from '@/stores/race'
+import { calculatePercentage } from '@/utils/math'
 import { storeToRefs } from 'pinia'
+
+const INCLINE_MULTIPLIER = 0.05
+const MAX_INCLINE = 10
+const TRANSITION_DURATION = 0.25
 
 const raceStore = useRaceStore()
 const { currentRound } = storeToRefs(raceStore)
 
 function horseProgressStyles(horse: RaceHorse) {
   if (!currentRound.value) return {}
-  const percentage = (horse.distanceInRound / currentRound.value.distance) * 100
-  const incline = Math.sin(horse.distanceInRound * 0.05) * 10
+  const trackPassedPercentage = calculatePercentage(
+    horse.distanceInRound,
+    currentRound.value.distance,
+  )
+  // incline needed to transform the horse for simulating running
+  const incline = Math.sin(horse.distanceInRound * INCLINE_MULTIPLIER) * MAX_INCLINE
 
   return {
-    left: `calc(${percentage}%`,
-    transition: 'left 0.25s linear, transform 0.25s linear',
+    left: `calc(${trackPassedPercentage}%`,
+    transition: `left ${TRANSITION_DURATION}s linear, transform ${TRANSITION_DURATION}s linear`,
     transform: `rotate(${incline}deg)`,
   }
 }
